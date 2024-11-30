@@ -2,14 +2,14 @@ import { sendError } from "@/libs/response";
 import User, { IUser } from "@/models/auth.model";
 import { generateToken } from "@/utils/jwt.helper";
 
-export const registerUserService = async (fullName: string, email: string, password: string) => {
+export const registerUserService = async (fullName: string, email: string, password: string,role:string) => {
   // Check if the email is already in use
   const existingUser = await User.findOne({ email });
   if (existingUser) {
     sendError.duplicate('Email');
   }
   // Create a new user
-  const user = await User.create({ fullName, email, password });
+  const user = await User.create({ fullName, email, password, role });
   // Generate a JWT token
   const token = generateToken({ id: user._id, role: user.role });
   return {
