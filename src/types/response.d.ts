@@ -2,6 +2,7 @@ import { boolean } from 'zod';
 
 export interface IResponse<T> {
     isSuccess: boolean;
+    statusCode:number;
     message: string;
     data: T;
 }
@@ -18,6 +19,7 @@ export type IPagination = {
 export interface IPaginatedResponse<T> {
     isSuccess: boolean;
     message: string;
+    statusCode:number;
     pagination?: IPagination;
     data: T;
 }

@@ -39,3 +39,4 @@ export const deleteByIdService = async <T>(id: string, model: Model<T>, messageT
         sendError.throwError(error);
     }
 };
+
