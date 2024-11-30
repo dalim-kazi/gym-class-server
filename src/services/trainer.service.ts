@@ -12,7 +12,7 @@ export const createNewTrainer = async (data: {
 }): Promise<ITrainer> => {
   const existingTrainer = await Trainer.findOne({ email: data.email });
   if (existingTrainer) {
-    throw new Error('Trainer with this email already exists');
+    sendError.notFound('Trainer with this email already exists');
   }
   return await Trainer.create(data);
 };

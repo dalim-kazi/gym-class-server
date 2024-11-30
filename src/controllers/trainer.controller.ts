@@ -20,7 +20,7 @@ export const createTrainerController = async (req: Request, res: Response,next:N
       data: trainer,
     });
   } catch (error: any) {
-    sendError.throwError(error);
+   next(error)
   }
 };
 
@@ -35,7 +35,7 @@ export const getTrainerByIdController = async (req: Request, res: Response,next:
       data: trainer,
     });
   } catch (error: any) {
-    sendError.throwError(error);
+   next(error)
   }
 };
 
@@ -51,7 +51,7 @@ export const updateTrainerController = async (req: Request, res: Response,next:N
       data: updatedTrainer,
     });
   } catch (error: any) {
-    sendError.throwError(error);
+   next(error)
   }
 };
 
@@ -65,7 +65,7 @@ export const deleteTrainerController = async (req: Request, res: Response,next:N
       message: 'Trainer deleted successfully',
     });
   } catch (error: any) {
-    sendError.throwError(error);
+   next(error)
   }
 };
 
@@ -78,6 +78,6 @@ export const getAllTrainersController = async (req: Request, res: Response,next:
     const response = await getAllWithPaginationService(paginationPage, paginationLimit);
     res.status(200).json(response);
   } catch (error: any) {
-    sendError.throwError(error);
+   next(error)
   }
 };
