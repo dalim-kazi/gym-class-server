@@ -11,28 +11,38 @@ declare global {
 }
 
 export const authenticate = (roles: string[] = []) => {
-  return (req: Request, res: Response, next: NextFunction) => {
+  return (req: Request, res: Response, next: NextFunction): void => {
     const authHeader = req.headers.authorization;
     const token = authHeader?.split(' ')[1];
     if (!token) {
-      return res.status(401).json({ success: false, message: 'Unauthorized', errorDetails: 'Token is missing' });
+       res.status(401).json({
+        success: false,
+        message: 'Unauthorized',
+        errorDetails: 'Token is missing',
+      });
+      return
     }
 
     try {
       const decoded = verifyToken(token) as IUser;
       req.user = decoded;
-
       if (roles.length && !roles.includes(decoded.role)) {
-        return res.status(403).json({
+         res.status(403).json({
           success: false,
           message: 'Forbidden',
           errorDetails: 'You do not have the required role to access this resource',
         });
+        return
       }
 
-      next();
-    } catch (error:any) {
-      return res.status(401).json({ success: false, message: 'Invalid token', errorDetails: error.message });
+      next(); 
+    } catch (error: any) {
+     res.status(401).json({
+        success: false,
+        message: 'Invalid token',
+        errorDetails: error.message,
+      });
+      return
     }
   };
 };

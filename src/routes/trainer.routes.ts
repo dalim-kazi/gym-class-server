@@ -6,18 +6,19 @@ import {
   deleteTrainerController,
   getAllTrainersController,
 } from '@/controllers/trainer.controller';
+import { authenticate } from '@/middlewares/authorization';
 
 const trainerRouter = express.Router();
 
 // Route to create a new trainer
 trainerRouter.route('/')
-.post(createTrainerController)
-.get(getAllTrainersController);
+.post(authenticate(['admin']),createTrainerController)
+.get(authenticate(['admin']),getAllTrainersController);
 
 // Route to get a trainer by ID
 trainerRouter.route('/:id')
-.get(getTrainerByIdController)
-.patch(updateTrainerController)
-.delete(deleteTrainerController);
+.get(authenticate(['admin']),getTrainerByIdController)
+.patch(authenticate(['admin']),updateTrainerController)
+.delete(authenticate(['admin']),deleteTrainerController);
 
 export default trainerRouter;
