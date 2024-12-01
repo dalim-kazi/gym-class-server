@@ -72,6 +72,7 @@ export const getClassScheduleService = async (
   const skip = (page - 1) * limit;
   // Fetch bookings and count total
   const bookings = await ClassSchedule.find()
+    .populate('trainer', 'fullName email')
     .skip(skip)
     .limit(limit);
   const totalBookings = await ClassSchedule.countDocuments();
