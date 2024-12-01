@@ -11,10 +11,11 @@ import envConfig from '@/configs/envConfig';
 import rateLimiter from '@/middlewares/rateLimiter';
 import helmet from 'helmet';
 import ExpressMongoSanitize from 'express-mongo-sanitize';
+import path from 'path';
 
 // Initializing the app
 const app = express();
-
+app.use(express.static(path.join(__dirname, 'public')));
 // middlewares
 app.use(express.json());
 app.use(cors(corsConfigOptions));
