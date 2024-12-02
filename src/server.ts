@@ -11,6 +11,6 @@ app.get('/', (req, res) => {
     res.send('Running server');
 });
 app.listen(port, () => {
-    console.log(port)
-    // logger.info(`ERP Construction is running on port:${port}`);
+    console.log(port);
+    logger.info(`GYM CLASS is running on port:${port}`);
 });

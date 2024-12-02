@@ -1,7 +1,11 @@
 import { CorsOptions } from 'cors';
 import envConfig from '@/configs/envConfig';
 
-const whitelistOrigins = ['http://localhost:3000', `http://localhost:${envConfig.PORT || 5000}`];
+const whitelistOrigins = [
+    'http://localhost:3000',
+    'https://gym-class-frontend.onrender.com',
+    `http://localhost:${envConfig.PORT || 5000}`
+];
 
 export const corsConfigOptions: CorsOptions = {
     origin: (origin, callback) => {

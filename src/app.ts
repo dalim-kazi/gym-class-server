@@ -11,21 +11,19 @@ import envConfig from '@/configs/envConfig';
 import rateLimiter from '@/middlewares/rateLimiter';
 import helmet from 'helmet';
 import ExpressMongoSanitize from 'express-mongo-sanitize';
-import path from 'path';
 
 // Initializing the app
 const app = express();
-// app.use(express.static(path.join(__dirname, 'public')));
 // middlewares
 app.use(express.json());
 app.use(cors(corsConfigOptions));
-// app.use(logRequests);
-// app.use(helmet());
-// app.use(rateLimiter);
+app.use(logRequests);
+app.use(helmet());
+app.use(rateLimiter);
 app.use(ExpressMongoSanitize());
 
 // Health Route
-app.get('/api/v1/construction/health', (_req, res: Response) => {
+app.get('/api/v1/gym-class', (_req, res: Response) => {
     res.status(200).json({ status: 'Up', message: 'construction server is online' });
 });
 
