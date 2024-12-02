@@ -19,9 +19,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // middlewares
 app.use(express.json());
 app.use(cors(corsConfigOptions));
-app.use(logRequests);
-app.use(helmet());
-app.use(rateLimiter);
+// app.use(logRequests);
+// app.use(helmet());
+// app.use(rateLimiter);
 app.use(ExpressMongoSanitize());
 
 // Health Route
