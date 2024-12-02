@@ -1,62 +1,109 @@
-# Gym Class Scheduling and Membership Management System
+Backend README (gym-class-backend)
+Gym Class Backend
+Description
+This is the server-side API for the Gym Class Scheduling and Membership Management System. It provides secure endpoints for user authentication, class scheduling, trainer management, and more.
 
-## Description
+Features
+Authentication: JWT-based secure authentication for all roles.
+Role-Based Access Control: Separate permissions for Admins, Trainers, and Trainees.
+Class Scheduling Management: Enforce limits on class schedules and trainee bookings.
+Error Handling: Comprehensive error responses for validation and authorization errors.
+Tech Stack
+Framework: Express.js
+Database: MongoDB/PostgreSQL
+ODM/ORM: Mongoose/Prisma
+Authentication: JWT
+Logger: Winston
+Setup Instructions
+Clone the repository:
 
-The Gym Class Scheduling and Membership Management System is designed to efficiently manage gym operations. The system supports three roles: **Admin**, **Trainer**, and **Trainee**, each with specific permissions. Admins handle the creation and management of trainers, class scheduling, and trainer assignment. Trainers are responsible for conducting classes and can only view their schedules. Trainees can book classes and manage their profiles.
+bash
+Copy code
+git clone https://github.com/dalim-kazi/gym-class-server
+cd gym-class-backend
+Install dependencies:
 
-The system integrates JWT-based authentication, role-based access control, and enforces various business rules to maintain efficient class management, such as limits on class schedules, trainee bookings, and more.
+bash
+Copy code
+npm install
+Configure environment variables: Create a .env file in the root directory and add:
 
-## Features
+env
+Copy code
+PORT=5000
+DATABASE_URL=https://gym-class-server.onrender.com
+JWT_SECRET=dsgsdfgkdkfgnvrtgewgdfgdfsgbfdbfdgvgdfvbcvnbcvncvnxnfgjfgmnhgjghkghkfuiuyjmdfbhfghfjfgjgfjnghmkkhjk
+Start the server:
 
-### Frontend (Client-Side)
-- **Home Page:** A welcoming page with details about gym services.
-- **Authentication Pages:**
-  - **Login Page:** Email and password login using JWT authentication.
-  - **Registration Page (Trainees only):** Sign up page with email, password, and full name fields for trainee registration.
-- **Admin Dashboard:**
-  - **Manage Trainers:** Admins can create, read, update, and delete trainers.
-  - **Class Scheduling:** Admins can create new schedules, ensure validation (max 5 schedules per day, 2-hour classes), and assign trainers to classes.
-- **Trainer Dashboard:** 
-  - **View Classes:** Trainers can view their assigned classes (date, time, trainees).
-- **Trainee Dashboard:** 
-  - **Book Classes:** Trainees can book available classes, ensuring no more than 10 trainees per class.
+bash
+Copy code
+npm run dev
+Build for production:
 
-### Backend (Server-Side)
-- **JWT Authentication:** Secure user authentication for all roles.
-- **Admin and Trainer Management:** Admins can manage trainer information.
-- **Class Scheduling Management:** Admins can schedule classes, with restrictions on the number of classes per day and trainees per class.
-- **Error Handling:** Comprehensive error handling for unauthorized access, validation errors, booking limits, and more.
+bash
+Copy code
+npm run build
+npm start
+Available Scripts
+npm run build: Compiles TypeScript into JavaScript.
+npm run dev: Starts the server in development mode using nodemon.
+npm start: Runs the compiled production server.
 
-### API Integration
-- **Redux Toolkit** is used for data fetching, managing authentication, class schedules, and trainer data. It ensures a smooth user experience with responsive error handling.
-- **Mobile Responsiveness:** The system is designed to be fully responsive, with pages optimized for mobile use using **Tailwind CSS**.
 
-## Technology Stack
+API Endpoints
+Authentication and User Management
+Base Route: /auth
 
-### Frontend
-- **Programming Language:** JavaScript/TypeScript (recommended)
-- **Framework:** Next.js
-- **Styling:** Tailwind CSS (for responsive design and component styling)
-- **State Management:** Redux Toolkit (for managing state and handling data fetching)
-- **Authentication:** JWT (client-side validation)
+HTTP Method	Endpoint	Description	Roles
+POST	/auth/register	Register a new user (trainee only).	Public
+POST	/auth/login	Login a user and receive a JWT token.	Public
+GET	/auth/get-all-user	Retrieve all users.	Admin
+GET	/auth/single-user/:id	Retrieve a single user by ID.	Admin
+PATCH	/auth/update-user/:id	Update user details by ID.	Admin
+DELETE	/auth/delete-user/:id	Delete a user by ID.	Admin
+Booking Management
+Base Route: /booking
 
-### Backend
-- **Programming Language:** JavaScript/TypeScript (recommended)
-- **Framework:** Express.js
-- **Database:** MongoDB/PostgreSQL (depending on preference)
-- **ORM/ODM:** Prisma/Mongoose (for MongoDB/PostgreSQL interaction)
-- **Authentication:** JWT (for server-side validation)
+HTTP Method	Endpoint	Description	Roles
+POST	/booking	Create a new booking.	Admin, Trainer, Trainee
+GET	/booking	Retrieve all bookings.	Admin, Trainer, Trainee
+PATCH	/booking/:id	Update the status of a booking by ID.	Admin, Trainer, Trainee
+DELETE	/booking/:id	Delete a booking by ID.	Admin, Trainer, Trainee
+Class Schedule Management
+Base Route: /class-schedule
 
-## Setup
+HTTP Method	Endpoint	Description	Roles
+POST	/class-schedule	Create a new class schedule.	Admin
+GET	/class-schedule	Retrieve all class schedules.	Public
+GET	/class-schedule/:id	Retrieve a class schedule by ID.	Admin
+PATCH	/class-schedule/:id	Update a class schedule by ID.	Admin
+DELETE	/class-schedule/:id	Delete a class schedule by ID.	Admin
+Authorization Rules
+Public: Routes that do not require authentication.
+Authenticated Users: Routes require a valid JWT token.
+Role-Specific Permissions:
+Admin: Full access to all resources.
+Trainer: Access to bookings and their assigned schedules.
+Trainee: Access to create and view bookings.
 
-### Prerequisites
-1. **Node.js** (version 14.x or higher)
-2. **npm** or **yarn**
-3. **MongoDB/PostgreSQL** (Ensure the database is set up and running)
 
-### Backend Setup
 
-1. Clone the repository:
 
-   ```bash
-   git clone <repository-url>
+Folder Structure
+bash
+Copy code
+.
+├── src/
+│   ├── controllers/   # Logic for handling API requests
+│   ├── routes/        # Route definitions
+│   ├── models/        # Database models (e.g., User, Class)
+│   ├── middlewares/   # Authentication and validation middlewares
+│   ├── utils/         # Helper functions and configurations
+│   └── server.ts      # Entry point
+├── dist/              # Compiled JavaScript files
+Dependencies
+Express.js
+Mongoose
+JWT
+Winston
+Zod (for validation)
